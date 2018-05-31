@@ -9,6 +9,21 @@
 import pandas as pd
 import numpy as np
 
+def sma_fast(close, n_fast=12, fillna=False):
+    """SMA
+    Short Period Simple Moving Average
+    Args:
+        close(pandas.Series): dataset 'Close' column.
+        n_fast(int): n period short-term.
+        fillna(bool): if True, fill nan values.
+    Returns:
+        pandas.Series: New feature generated.
+    """
+    smafast = close.rolling(window=n_fast,center=False).mean()
+    if fillna:
+        smafast = smafast.fillna(method='backfill')
+    return pd.Series(smafast, name='smafast')
+
 
 def macd(close, n_fast=12, n_slow=26, fillna=False):
     """Moving Average Convergence Divergence (MACD)
